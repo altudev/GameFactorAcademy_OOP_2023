@@ -1,33 +1,31 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using GFA.OOP.Models;
 
-using GFA.OOP.Enums;
-using GFA.OOP.Models;
+var fileText = File.ReadAllText("C:\\Users\\alper\\Desktop\\RussianMob.txt");
 
-var firstPlayer = new Player("Gandhalf 38", 38, Race.Human,PlayerClassType.Mage);
+var lineSplittedText = fileText.Split('\n');
 
-Console.WriteLine($"ID:{firstPlayer.Id}, Character Name:{firstPlayer.Name}, Character Level:{firstPlayer.Level}, Character Favourite Number:{firstPlayer.FavouriteNumber}");
+List<GameAccount> gameAccounts = new ();
 
-firstPlayer.LevelUp();
-firstPlayer.LevelUp();
-firstPlayer.LevelUp();
-firstPlayer.LevelUp();
-firstPlayer.LevelUp();
+foreach (var lineText in lineSplittedText)
+{
+    var lineItems = lineText.Split("---");
 
-Console.WriteLine($"ID:{firstPlayer.Id}, Character Name:{firstPlayer.Name}, Character Level:{firstPlayer.Level}, Character Favourite Number:{firstPlayer.FavouriteNumber}");
 
-firstPlayer.ChangeRace(Race.Dwarf);
+    GameAccount account = new()
+    {
+        
+        UserName = lineItems[0],
+        Password = lineItems[1],
+        Platform = GameAccount.ConvertStringToPlatform(lineItems[2]),
+        Level = GameAccount.ConvertStringToLevel(lineItems[3]),
+        GameName = lineItems[4],
+        Price = Convert.ToDecimal(lineItems[5].Replace("$",string.Empty)),
+    };
 
-Console.WriteLine(firstPlayer.Race.ToString());
+    gameAccounts.Add(account);
 
-var secondPlayer = new Player("Excalibur",10,Race.Orc,PlayerClassType.DeathKnight);
+}
 
-Console.WriteLine($"ID:{secondPlayer.Id}, Character Name:{secondPlayer.Name}, Character Level:{secondPlayer.Level}, Character Favourite Number:{secondPlayer.FavouriteNumber}");
-
-var thirdPlayer = new Player("Tarkan", 55, Race.Undead, PlayerClassType.Assassin);
-
-Console.WriteLine($"ID:{thirdPlayer.Id}, Character Name:{thirdPlayer.Name}, Character Level:{thirdPlayer.Level}, Character Favourite Number:{thirdPlayer.FavouriteNumber}");
-
+gameAccounts.ForEach(x=>Console.WriteLine($"ID:{x.Id}, UserName:{x.UserName}, Password:{x.Password}, Platform:{x.Platform}, Level:{x.Level}, GameName:{x.GameName}, Price:{x.Price:C}"));
 
 Console.ReadLine();
-
-

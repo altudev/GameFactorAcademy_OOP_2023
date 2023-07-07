@@ -24,6 +24,7 @@ namespace GFA.OOP.Models
 
         public Player(string name, int level, Race race, PlayerClassType classType)
         {
+
             Id = Guid.NewGuid();
 
             Name = name;
