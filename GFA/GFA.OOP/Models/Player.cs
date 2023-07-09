@@ -1,19 +1,20 @@
 ﻿
 
+using GFA.OOP.Common;
 using GFA.OOP.Enums;
 
 namespace GFA.OOP.Models
 {
-    public class Player
+    public class Player:BaseModel<Guid>
     {
         private int _level;
 
-        public Guid Id { get; }
         public string Name { get; set; }
         public int Level => _level;
         public Race Race { get; private set; }
         public PlayerClassType ClassType { get; set; }
         public int  FavouriteNumber { get; set; }
+        public double Hp { get; set; }
 
         public Player()
         {

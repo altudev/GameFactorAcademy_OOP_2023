@@ -1,12 +1,12 @@
-﻿using GFA.OOP.Enums;
+﻿using GFA.OOP.Common;
+using GFA.OOP.Enums;
 using IdGen;
 
 namespace GFA.OOP.Models
 {
-    public class GameAccount
+    public class GameAccount : BaseModel<string>
     {
         private static IdGenerator _generator = new IdGenerator(0);
-        public string Id { get; private set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public Platform Platform { get; set; }
@@ -14,9 +14,12 @@ namespace GFA.OOP.Models
         public string GameName { get; set; }
         public decimal Price { get; set; }
 
+
         public GameAccount()
         {
             Id = _generator.CreateId().ToString();
+
+            CreatedOn = DateTime.Now;
         }
 
 

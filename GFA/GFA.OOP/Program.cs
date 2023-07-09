@@ -1,31 +1,57 @@
-﻿using GFA.OOP.Models;
+﻿
+//using GFA.OOP.Common;
+//using GFA.OOP.ComplexTypes;
+//using GFA.OOP.Interfaces;
+//using GFA.OOP.Models;
+//using GFA.OOP.Services;
 
-var fileText = File.ReadAllText("C:\\Users\\alper\\Desktop\\RussianMob.txt");
+////Console.WriteLine("How do you want to save your content?");
+////Console.WriteLine(".txt or .json");
 
-var lineSplittedText = fileText.Split('\n');
+////var usersAnswer = Console.ReadLine();
 
-List<GameAccount> gameAccounts = new ();
+////var baseModel = new BaseModel<string>();
 
-foreach (var lineText in lineSplittedText)
-{
-    var lineItems = lineText.Split("---");
+////IFileSaver fileSaver;
 
+////if (usersAnswer == "txt")
+////{
+////    fileSaver = new TextFileSaver();
 
-    GameAccount account = new()
-    {
-        
-        UserName = lineItems[0],
-        Password = lineItems[1],
-        Platform = GameAccount.ConvertStringToPlatform(lineItems[2]),
-        Level = GameAccount.ConvertStringToLevel(lineItems[3]),
-        GameName = lineItems[4],
-        Price = Convert.ToDecimal(lineItems[5].Replace("$",string.Empty)),
-    };
+////    fileSaver.Save("ornek","Alper hoca interfaceleri anlatamıyor.");
+////}
+////else
+////{
+////    fileSaver = new JsonFileSaver();
 
-    gameAccounts.Add(account);
+////    fileSaver.Save("ornek", "Alper hoca interfaceleri anlatamıyor.");
+////}
 
-}
+//var gameFactoryList = new GameFactoryAcademyList<Objective,Guid>();
 
-gameAccounts.ForEach(x=>Console.WriteLine($"ID:{x.Id}, UserName:{x.UserName}, Password:{x.Password}, Platform:{x.Platform}, Level:{x.Level}, GameName:{x.GameName}, Price:{x.Price:C}"));
+using GFA.OOP.Extensions;
+using GFA.OOP.Models;
+
+var gameAccount = new GameAccount();
+
+//gameAccount.Level = 100;
+
+//Console.WriteLine(gameAccount.Level.IsEven());
+
+//gameAccount.Level = 199;
+
+//Console.WriteLine(gameAccount.Level.IsEven());
+
+var myLevel = "100FFFFFFF";
+
+gameAccount.Level = myLevel.ConvertStringToLevel();
+
+Console.WriteLine(gameAccount.Level);
+
+//int myAge = 28;
+
+//var isMyAgeEven = myAge.IsEven();
+
+//Console.WriteLine(isMyAgeEven);
 
 Console.ReadLine();
