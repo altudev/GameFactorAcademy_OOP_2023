@@ -29,29 +29,83 @@
 
 //var gameFactoryList = new GameFactoryAcademyList<Objective,Guid>();
 
-using GFA.OOP.Extensions;
 using GFA.OOP.Models;
+using GFA.OOP.Services;
 
-var gameAccount = new GameAccount();
+var logger = new FileLogger(filePath: "C:\\Users\\alper\\Desktop\\gfa_logs.txt", "Gfa Logger");
 
-//gameAccount.Level = 100;
+try
+{
 
-//Console.WriteLine(gameAccount.Level.IsEven());
 
-//gameAccount.Level = 199;
+    Thread.Sleep(2500);
 
-//Console.WriteLine(gameAccount.Level.IsEven());
+    var gameAccount = new GameAccount();
 
-var myLevel = "100FFFFFFF";
+    logger.Log("A new GameAccount instance was created.");
 
-gameAccount.Level = myLevel.ConvertStringToLevel();
+    gameAccount.Level = 100;
 
-Console.WriteLine(gameAccount.Level);
+    logger.Log($"{gameAccount.Level} level was assigned to the GameAccount instance.");
 
-//int myAge = 28;
+    gameAccount.Level = 199;
 
-//var isMyAgeEven = myAge.IsEven();
+    Object objectAccount = gameAccount;
 
-//Console.WriteLine(isMyAgeEven);
+    List<object> objects = new List<object>();
+
+    objects.Add(objectAccount);
+    objects.Add(gameAccount);
+    objects.Add(logger);
+
+
+    
+
+    foreach (var exObject in objects)
+    {
+        if (exObject != null && exObject is GameAccount)
+        {
+            var gameAccount2 = gameAccount as GameAccount;
+
+            gameAccount2.Level = 100;
+        }
+        else if(exObject is FileLogger) { }
+        {
+            
+        }
+    }
+
+    logger.Log($"A new value for the Level ({gameAccount.Level}) was assigned to the GameAccount instance.");
+
+    gameAccount.GameName = "Cyberpunk 2077";
+
+    logger.Log($"{gameAccount.GameName} as a name field's value was assigned to the GameAccount instance.");
+
+    if (string.IsNullOrEmpty(gameAccount.UserName))
+        throw new Exception("Username cannot be null or empty.");
+}
+catch (NullReferenceException exception)
+{
+
+}
+catch (Exception ex)
+{
+    Console.WriteLine("Please enter your username and try again.");
+    logger.Log(ex.ToString());
+}
+
+//var myLevel = "100FFFFFFF";
+
+//// This comment is for Mr. Ozan The Russion Mob
+
+//gameAccount.Level = myLevel.ConvertStringToLevel();
+
+//Console.WriteLine(gameAccount.Level);
+
+////int myAge = 28;
+
+////var isMyAgeEven = myAge.IsEven();
+
+////Console.WriteLine(isMyAgeEven);
 
 Console.ReadLine();
