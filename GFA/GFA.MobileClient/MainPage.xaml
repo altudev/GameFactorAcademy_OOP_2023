@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:components="clr-namespace:GFA.MobileClient.Components"
              x:Class="GFA.MobileClient.MainPage">
 
     <ScrollView>
@@ -17,23 +16,41 @@
                 HorizontalOptions="Center" />
 
             <Label
+                x:Name="lblHelloWorld"
                 Text="Hello, World!"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
 
             <Label
+                x:Name="lblCounter"
                 Text="Welcome to .NET Multi-platform App UI"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I"
                 FontSize="18"
                 HorizontalOptions="Center" />
 
-            <components:KadirButton
+            <Entry x:Name="txtAge" Placeholder="Yaşınız"/>
+
+            <Entry x:Name="txtName" Placeholder="Adınız"/>
+
+            <Button
+                x:Name="btnClickMe"
+                Text="Do not click me"
+                BackgroundColor="BlueViolet"
+                TextColor="Azure"
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Center" ClassId="myFirstButton"/>
+
+            <Button
                 x:Name="CounterBtn"
+                BackgroundColor="ForestGreen"
+                TextColor="DeepSkyBlue"
                 Text="Click me"
                 SemanticProperties.Hint="Counts the number of times you click"
                 Clicked="OnCounterClicked"
+                ClassId="mySecondButton"
                 HorizontalOptions="Center" />
 
         </VerticalStackLayout>

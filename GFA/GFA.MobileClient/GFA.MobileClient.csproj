@@ -16,7 +16,7 @@
 
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.gfa.mobileclient</ApplicationId>
-		<ApplicationIdGuid>c013a320-4e08-4c74-bc0f-c55dc56e9775</ApplicationIdGuid>
+		<ApplicationIdGuid>b6e3a251-49d7-456c-99d2-da3c5828ae67</ApplicationIdGuid>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -50,12 +50,6 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Components\KadirButton.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	</ItemGroup>
 
 </Project>

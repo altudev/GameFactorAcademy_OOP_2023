@@ -37,6 +37,33 @@ var logger = new FileLogger(filePath: "C:\\Users\\alper\\Desktop\\gfa_logs.txt",
 try
 {
 
+    decimal bigNumber = 0;
+    int smallNumber = 100;
+
+    bigNumber = smallNumber;
+
+    smallNumber = (int)bigNumber;
+
+    NPC npc = new NPC()
+    {
+        Id = Guid.NewGuid(),
+        Name = "Alper Tunga",
+        CreatedOn = DateTimeOffset.Now,
+        Hp = 50,
+    };
+
+    Player player = new Player()
+    {
+        Id = Guid.NewGuid(),
+        Name = "Alper Tunga",
+        CreatedOn = DateTimeOffset.Now,
+        Hp = 50,
+    };
+
+
+    //NPC alperTunga = (NPC)player;
+
+    NPC alperTunga = (NPC)player;
 
     Thread.Sleep(2500);
 
@@ -59,7 +86,12 @@ try
     objects.Add(logger);
 
 
-    
+    NPC myFavNpc = (NPC)player;
+
+
+
+
+
 
     foreach (var exObject in objects)
     {
@@ -83,6 +115,8 @@ try
 
     if (string.IsNullOrEmpty(gameAccount.UserName))
         throw new Exception("Username cannot be null or empty.");
+
+    var yourNpc = (NPC)player;
 }
 catch (NullReferenceException exception)
 {

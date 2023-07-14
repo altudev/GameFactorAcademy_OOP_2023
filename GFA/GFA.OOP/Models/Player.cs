@@ -10,6 +10,8 @@ namespace GFA.OOP.Models
         private int _level;
 
         public string Name { get; set; }
+        public string Description { get; set; }
+        public string Address { get; set; }
         public int Level => _level;
         public Race Race { get; private set; }
         public PlayerClassType ClassType { get; set; }
@@ -56,6 +58,18 @@ namespace GFA.OOP.Models
             var random = new Random();
 
             FavouriteNumber = random.Next(9999);
+        }
+
+        public static implicit operator Player(NPC npc)
+        {
+            return new Player()
+            {
+                Id = npc.Id,
+                Name = npc.Name,
+                Hp = npc.Hp,
+                CreatedOn = npc.CreatedOn,
+                CreatedByUserId = npc.CreatedByUserId,
+            };
         }
 
     }
