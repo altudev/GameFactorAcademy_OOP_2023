@@ -4,6 +4,7 @@ namespace GFA.Crawler.Application.Interfaces
 {
     public interface IProductCrawlerService
     {
-        ProductCrawlerResponseDto Crawl(int productCount);
+        ProductCrawlerResponseDto Crawl();
+        string CheckGooglePage();
     }
 }

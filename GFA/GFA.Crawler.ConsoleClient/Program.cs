@@ -1,82 +1,39 @@
-﻿using GFA.Crawler.Domain.Entities;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
-using WebDriverManager;
-using WebDriverManager.DriverConfigs.Impl;
+﻿using GFA.Crawler.Application.Interfaces;
+using GFA.Crawler.Application.Services;
+using GFA.Crawler.ConsoleClient.Services;
+
+Console.BackgroundColor = ConsoleColor.Green;
+
+Console.ForegroundColor = ConsoleColor.Black;
 
 Console.WriteLine("Uygulama başladı.");
 
-new DriverManager().SetUpDriver(new FirefoxConfig());
+Console.WriteLine("--------------------------------------");
 
-IWebDriver driver = new FirefoxDriver();
+IProductCrawlerService crawlerService = new ProductCrawlerConsoleManager();
 
-driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromMilliseconds(1000);
+var response = crawlerService.Crawl();
 
-driver.Navigate().GoToUrl("https://4teker.net");
+Console.WriteLine("Kazıma işlemi başarıyla tamamlandı.");
 
-Thread.Sleep(500);
+Console.WriteLine("--------------------------------------");
 
-// Selecting Product Divs
-// col mb-5
+Console.WriteLine($"Toplamda kazınan ürün sayısı:{response.Products.Count}");
 
-var productDivs = driver.FindElements(By.CssSelector(".card.h-100"));
+Console.WriteLine("--------------------------------------");
+
+Console.WriteLine($"İndirimdeki ürünlerin sayısı:{response.OnSaleCount}");
+
+Console.WriteLine("--------------------------------------");
+
+Console.WriteLine($"İndirimsiz ürünlerin sayısı:{response.SaleCount}");
+
+IExcelService excelService = new ExcelManager();
+
+var excelFile = excelService.CreateProductsFile(response.Products);
+
+excelService.SaveFile(excelFile,Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"products.xlsx"));
+
+Console.ReadLine();
 
 
-foreach (var productDiv in productDivs)
-{
-    var product = new Product();
-
-    // Select OnSaleDiv
-
-    var onSaleDiv = productDiv.FindElement(By.CssSelector(".onsale"));
-
-    if (onSaleDiv is not null)
-    {
-        product.IsOnSale = true;
-
-        var salePriceSpan = productDiv.FindElement(By.CssSelector(".sale-price"));
-
-        // Selecting sale price
-
-        var salePriceText = salePriceSpan.Text;
-
-        salePriceText = salePriceText
-            .Replace("$", string.Empty)
-            .Replace(",", ".");
-
-        product.SalePrice = Convert.ToDecimal(salePriceText);
-    }
-
-    // Selecting Product Name
-
-    var productNameH5 = productDiv.FindElement(By.CssSelector(".product-name"));
-
-    product.Name = productNameH5.Text;
-
-    // Selecting Price Span
-
-    var priceSpan = productDiv.FindElement(By.CssSelector(".price"));
-
-    var priceText = priceSpan.Text
-        .Replace("$", string.Empty)
-        .Replace(",", ".");
-
-    product.Price = Convert.ToDecimal(priceText);
-
-    // Selecting Image
-
-    var productImg = productDiv.FindElement(By.TagName("img"));
-
-    product.ImagePath = productImg.GetAttribute("src");
-
-}
-
-Thread.Sleep(500);
-
-var submitButton = driver.FindElement(By.ClassName("gNO89b"));
-
-submitButton.Click();
-
-Thread.Sleep(7500);
-
-driver.Quit();

@@ -1,18 +1,18 @@
 ﻿using GFA.Crawler.Application.Interfaces;
 using GFA.Crawler.Application.Models;
-using GFA.Crawler.Domain.Entities;
-using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
-using WebDriverManager;
+using OpenQA.Selenium;
 using WebDriverManager.DriverConfigs.Impl;
+using WebDriverManager;
+using GFA.Crawler.Domain.Entities;
 
-namespace GFA.Crawler.Application.Services
+namespace GFA.Crawler.ConsoleClient.Services
 {
-    public class ProductCrawlerManager:IProductCrawlerService
+    public class ProductCrawlerConsoleManager : IProductCrawlerService
     {
         private readonly IWebDriver _driver;
 
-        public ProductCrawlerManager()
+        public ProductCrawlerConsoleManager()
         {
             new DriverManager().SetUpDriver(new FirefoxConfig());
 
@@ -36,7 +36,7 @@ namespace GFA.Crawler.Application.Services
 
             var productDivs = _driver.FindElements(By.CssSelector(".card.h-100"));
 
-            List<Product> products = new();
+            List<Product> products = new ();
 
             foreach (var productDiv in productDivs)
             {

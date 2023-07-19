@@ -1,4 +1,6 @@
 ﻿
+using GFA.Crawler.Application.Interfaces;
+using GFA.Crawler.Application.Services;
 using GFA.MobileClient.Models;
 
 namespace GFA.MobileClient
@@ -7,9 +9,13 @@ namespace GFA.MobileClient
     {
         int count = 0;
 
+        private readonly IProductCrawlerService _productCrawlerService;
+
         public MainPage()
         {
             InitializeComponent();
+
+            _productCrawlerService = new ProductCrawlerManager();
         }
 
         private void OnCounterClicked(object sender, EventArgs e)
@@ -96,6 +102,17 @@ namespace GFA.MobileClient
             //{
             //    Shell.Current.DisplayAlert("Hata!", "Beklenmedik bir hata oluştu.", "Tamam", "İptal");
             //}
+        }
+
+        private void StartCrawl(object sender, EventArgs e)
+        {
+           var response =  _productCrawlerService.Crawl();
+
+            IExcelService excelService = new ExcelManager();
+
+            var excelFile = excelService.CreateProductsFile(response.Products);
+
+            excelService.SaveFile(excelFile, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "products.xlsx"));
         }
     }
 }
